@@ -3,9 +3,9 @@ import { authAPIURL } from '../helpers/envVars';
 import { authLoginPostRequest } from '../helpers/APIBuilders';
 
 test.describe.configure({ mode: 'parallel' });
-test.describe('Admin Page', () => {
+test.describe('Auth API', () => {
 
-    test('should login and logout with valid credentials', async ({ request }) => {
+    test('should login and logout with valid credentials @API', async ({ request }) => {
         const loginResponse = await authLoginPostRequest(request);
 
         expect((loginResponse).status()).toEqual(200);
@@ -21,7 +21,7 @@ test.describe('Admin Page', () => {
         expect(logoutResponse.status()).toEqual(200);
     });
   
-    test('should not log in with invalid credentials', async ({ request }) => {
+    test('should not log in with invalid credentials @API', async ({ request }) => {
         const loginResponse = await authLoginPostRequest(request, 'xxxx', 'zzzz');
         expect((loginResponse).status()).toEqual(403);
     });

@@ -13,7 +13,7 @@ test.describe('Home Page', () => {
         }
     })
 
-    test('has logo', async () => {
+    test('has logo @E2E', async () => {
         await expect(homePage.logo).toBeVisible();
     });
 

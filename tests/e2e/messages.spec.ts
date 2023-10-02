@@ -20,7 +20,7 @@ test.describe('Messages', () => {
         }
     })
 
-    test('contact form shows error when blank form submitted', async () => {
+    test('contact form shows error when blank form submitted @E2E', async () => {
         expect(homePage.contactName).toBeVisible;
         expect(homePage.contactEmail).toBeVisible;
         expect(homePage.contactPhone).toBeVisible;
@@ -32,7 +32,7 @@ test.describe('Messages', () => {
         expect(homePage.contactFormErrorAlert).toBeVisible;
     });
 
-    test('contact form shows success message when form submitted, can see message in admin page', async ({ browser }) => {
+    test('contact form shows success message when form submitted, can see message in admin page @E2E', async ({ browser }) => {
         messagesPageContext = await browser.newContext();
         messagesPage = new MessagesPage(await messagesPageContext.newPage());
         await messagesPage.goToMessagePage();

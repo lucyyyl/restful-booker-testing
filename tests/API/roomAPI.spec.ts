@@ -3,12 +3,12 @@ import { roomsAPIURL, authAPIURL } from '../helpers/envVars';
 import { authLoginPostRequest, roomDeleteRequest, roomGetRequest, roomPostRequest } from '../helpers/APIBuilders';
 
 test.describe.configure({ mode: 'parallel' });
-test.describe('Admin Page', () => {
+test.describe('Room API', () => {
     test.beforeEach(async ({ request }) => {
       await authLoginPostRequest(request);
     })
 
-    test('should create a room, retrive the room and delete the room', async ({ request }) => {
+    test('should create a room, retrive the room and delete the room @API', async ({ request }) => {
       const newRoom = await roomPostRequest(request);
       expect((newRoom).status()).toEqual(201);
       const resp = JSON.parse(await newRoom.text());
@@ -25,7 +25,7 @@ test.describe('Admin Page', () => {
       expect(retriveRoom.status()).toBe(500);
     });
   
-    test('should return an error when an invalid room creation request is sent', async ({ request }) => {
+    test('should return an error when an invalid room creation request is sent @API', async ({ request }) => {
       const newRoom = await roomPostRequest(request, "");
       expect(newRoom.status()).toEqual(400);
       const resp = JSON.parse(await newRoom.text());

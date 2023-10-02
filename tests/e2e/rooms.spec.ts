@@ -29,7 +29,7 @@ test.describe('Rooms', () => {
 
     })
 
-    test('has hotel room and booking form errors when incorrect data submitted', async () => {
+    test('has hotel room and booking form errors when incorrect data submitted @E2E', async () => {
         expect(homePage.hotelRoom).toBeVisible;
         await expect(homePage.hotelRoom).toHaveCount(1);
         expect(homePage.bookRoomButton).toBeVisible;
@@ -50,7 +50,7 @@ test.describe('Rooms', () => {
         expect(homePage.roomErrorAlert).toBeVisible;
     });
 
-    test('can add room and delete room', async () => {
+    test('can add room and delete room @E2E', async () => {
         expect(adminPage.pageTitle).toBeVisible;
         await adminPage.userNameField.fill(adminUsername);
         await adminPage.passwordField.fill(adminPassword);
