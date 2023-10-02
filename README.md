@@ -15,6 +15,7 @@ If you only want to run the API tests run ```npx playwright test --grep @API```
 
 ## Framework structure
 Currently the entire framework and tests live within the test directory. 
+The framework has been built using playwright and typescript.
 
 ### Tests
 This directory houses the e2e and API directories and the helpers and pages directories. 
