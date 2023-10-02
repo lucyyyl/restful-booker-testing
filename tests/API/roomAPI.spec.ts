@@ -2,7 +2,6 @@ import { test, expect } from '@playwright/test';
 import { roomDeleteRequest, roomGetRequest, roomPostRequest, roomPutRequest } from '../../helpers/APIBuilders';
 import { createRoom, deleteRoom, login } from '../../helpers/APIHelpers';
 
-test.describe.configure({ mode: 'parallel' });
 test.describe('Room API', () => {
     test.beforeEach(async ({ request }) => {
       await login(request);
@@ -33,7 +32,7 @@ test.describe('Room API', () => {
       expect(error).toBe('BAD_REQUEST');
     });
 
-    test('should update room informatoin @API',async ({ request }) => {
+    test('should update room information @API',async ({ request }) => {
       const roomid = await createRoom(request);
 
       const updateRoom = await roomPutRequest(request,  roomid);

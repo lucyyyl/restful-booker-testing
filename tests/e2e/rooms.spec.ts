@@ -3,7 +3,6 @@ import { HomePage } from '../../pages/HomePage';
 import { AdminPage } from '../../pages/AdminPage';
 import { adminPassword, adminUsername } from '../../helpers/envVars';
 
-test.describe.configure({ mode: 'parallel' });
 test.describe('Rooms', () => {
     let homePage: HomePage,
     homePageContext: BrowserContext,
