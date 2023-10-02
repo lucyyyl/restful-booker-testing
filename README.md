@@ -14,6 +14,7 @@ If you only want to run the end to end tests run ```npx playwright test --grep @
 If you only want to run the API tests run ```npx playwright test --grep @API```
 
 ## Framework structure
+The framework has been built using playwright and typescript.
 
 ### Helpers 
 This directory houses the helper files, which contain functions and variables used throughout the project. 
