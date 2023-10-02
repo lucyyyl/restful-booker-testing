@@ -1,6 +1,6 @@
 import { test, expect, BrowserContext, Page } from '@playwright/test';
-import { AdminPage } from '../pages/AdminPage';
-import { adminPassword, adminUsername } from '../helpers/envVars';
+import { AdminPage } from '../../pages/AdminPage';
+import { adminPassword, adminUsername } from '../../helpers/envVars';
 
 test.describe.configure({ mode: 'parallel' });
 test.describe('Admin Page', () => {

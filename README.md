@@ -14,18 +14,6 @@ If you only want to run the end to end tests run ```npx playwright test --grep @
 If you only want to run the API tests run ```npx playwright test --grep @API```
 
 ## Framework structure
-Currently the entire framework and tests live within the test directory. 
-
-### Tests
-This directory houses the e2e and API directories and the helpers and pages directories. 
-
-### API
-This directory houses the API test files. 
-Each file is the test for one of the APIS. And includes at least 1 happy path and sad path test. 
-
-### e2e
-This directory houses the e2e test files. 
-Each file is for one area of behaviour of the application. 
 
 ### Helpers 
 This directory houses the helper files, which contain functions and variables used throughout the project. 
@@ -36,3 +24,14 @@ This directory houses the helper files, which contain functions and variables us
 
 ### Pages
 This directory houses the page files, which contain all the elements of a page that we will need to interact with. 
+
+### Tests
+This directory houses the e2e and API directories. 
+
+### API
+This directory houses the API test files. 
+Each file is the test for one of the APIS. And includes at least 1 happy path and sad path test. 
+
+### e2e
+This directory houses the e2e test files. 
+Each file is for one area of behaviour of the application. 

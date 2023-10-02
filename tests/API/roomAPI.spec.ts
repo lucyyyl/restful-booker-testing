@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { roomsAPIURL, authAPIURL } from '../helpers/envVars';
-import { authLoginPostRequest, roomDeleteRequest, roomGetRequest, roomPostRequest } from '../helpers/APIBuilders';
+import { roomsAPIURL, authAPIURL } from '../../helpers/envVars';
+import { authLoginPostRequest, roomDeleteRequest, roomGetRequest, roomPostRequest } from '../../helpers/APIBuilders';
 
 test.describe.configure({ mode: 'parallel' });
 test.describe('Room API', () => {

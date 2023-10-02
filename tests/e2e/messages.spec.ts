@@ -1,7 +1,7 @@
 import { test, expect, BrowserContext } from '@playwright/test';
-import { HomePage } from '../pages/HomePage';
-import { MessagesPage } from '../pages/MessagesPage';
-import { adminPassword, adminUsername } from '../helpers/envVars'
+import { HomePage } from '../../pages/HomePage';
+import { MessagesPage } from '../../pages/MessagesPage';
+import { adminPassword, adminUsername } from '../../helpers/envVars'
 
 test.describe.configure({ mode: 'parallel' });
 test.describe('Messages', () => {

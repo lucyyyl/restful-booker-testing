@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { authAPIURL } from '../helpers/envVars';
-import { authLoginPostRequest } from '../helpers/APIBuilders';
+import { authAPIURL } from '../../helpers/envVars';
+import { authLoginPostRequest } from '../../helpers/APIBuilders';
 
 test.describe.configure({ mode: 'parallel' });
 test.describe('Auth API', () => {
