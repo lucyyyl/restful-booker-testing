@@ -16,7 +16,7 @@ test.describe('Admin Page', () => {
         if (adminPageHackButton) {
             await adminPage.letMeHackButton.click();
         }
-    })
+    });
 
     test('can login and logout @E2E', async () => {
         expect(adminPage.pageTitle).toBeVisible;

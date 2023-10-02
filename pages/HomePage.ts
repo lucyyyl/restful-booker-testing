@@ -1,4 +1,5 @@
 import {Locator, Page} from '@playwright/test';
+import { mainPageURL } from '../helpers/envVars';
 
 export class HomePage {
     readonly page: Page;
@@ -51,7 +52,7 @@ export class HomePage {
     }
 
     async goToHomePage() {
-        await this.page.goto('http://localhost:8080')
+        await this.page.goto(mainPageURL);
     }
 
     async scrollToBottom() {

@@ -40,12 +40,15 @@ test.describe('Messages', () => {
         if (adminPageHackButton) {
             await messagesPage.letMeHackButton.click();
         }
+
+        // log in to admin
         expect(messagesPage.pageTitle).toBeVisible;
         await messagesPage.userNameField.fill(adminUsername);
         await messagesPage.passwordField.fill(adminPassword);
         await messagesPage.submitCredentialsButton.click();
         expect(messagesPage.logoutButton).toBeVisible;
         
+        // check contact form elements are there
         expect(homePage.contactName).toBeVisible;
         expect(homePage.contactEmail).toBeVisible;
         expect(homePage.contactPhone).toBeVisible;
@@ -53,6 +56,7 @@ test.describe('Messages', () => {
         expect(homePage.contactDescription).toBeVisible;
         expect(homePage.contactSubmitButton).toBeVisible;
 
+        // fill in contact form
         await homePage.contactName.fill('Jane');
         await homePage.contactEmail.fill('jane@email.com');
         await homePage.contactPhone.fill('01189998819991197253');
@@ -62,6 +66,7 @@ test.describe('Messages', () => {
         await homePage.contactSubmitButton.click();
         expect(homePage.contactFormSuccess).toBeVisible;
 
+        // confirm message has been submitted and delete message
         messagesPage.goToMessagePage();
         expect(messagesPage.messageRow).toHaveCount(2);
         await messagesPage.messageRow.nth(1).click();

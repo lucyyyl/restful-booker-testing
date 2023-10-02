@@ -11,7 +11,7 @@ test.describe('Home Page', () => {
         if (hackButton) {
             await homePage.letMeHackButton.click();
         }
-    })
+    });
 
     test('has logo @E2E', async () => {
         await expect(homePage.logo).toBeVisible();

@@ -1,4 +1,5 @@
 import {Locator, Page} from '@playwright/test';
+import { adminURL } from '../helpers/envVars';
 
 export class AdminPage {
     readonly page: Page;
@@ -38,6 +39,6 @@ export class AdminPage {
     }
 
     async goToAdminPage() {
-        await this.page.goto('http://localhost:8080/#/admin');
+        await this.page.goto(adminURL);
     }
 }

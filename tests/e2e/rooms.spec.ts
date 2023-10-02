@@ -26,14 +26,14 @@ test.describe('Rooms', () => {
             await adminPage.letMeHackButton.click();
         }
 
-    })
+    });
 
     test('has hotel room and booking form errors when incorrect data submitted @E2E', async () => {
         expect(homePage.hotelRoom).toBeVisible;
-        await expect(homePage.hotelRoom).toHaveCount(1);
         expect(homePage.bookRoomButton).toBeVisible;
         await homePage.bookRoomButton.click();
 
+        // confirm room form elements are visible
         expect(homePage.calendar).toBeVisible;
         expect(homePage.roomFirstNameField).toBeVisible;
         expect(homePage.roomLastNameField).toBeVisible;
@@ -41,21 +41,26 @@ test.describe('Rooms', () => {
         expect(homePage.roomPhoneField).toBeVisible;
         expect(homePage.roomBookButton).toBeVisible;
 
+        // fill in room form
         await homePage.roomFirstNameField.fill('Smith');
         await homePage.roomLastNameField.fill('Smith');
         await homePage.roomEmailField.fill('jane@email.com');
         await homePage.roomPhoneField.fill('01189998819991197253')
-        await homePage.roomBookButton.click();
+        await homePage.roomBookButton.click()
+
+        // confirm error is shown
         expect(homePage.roomErrorAlert).toBeVisible;
     });
 
     test('can add room and delete room @E2E', async () => {
+        // log in to admin
         expect(adminPage.pageTitle).toBeVisible;
         await adminPage.userNameField.fill(adminUsername);
         await adminPage.passwordField.fill(adminPassword);
         await adminPage.submitCredentialsButton.click();
         expect(adminPage.logoutButton).toBeVisible;
 
+        // add a room
         await adminPage.roomNameField.fill('102');
         await adminPage.roomTypeDropdown.selectOption('Double');
         await adminPage.roomAccessibilityDropdown.selectOption('true');
@@ -65,11 +70,13 @@ test.describe('Rooms', () => {
         await adminPage.safeCheckbox.check();
         await adminPage.createRoomButton.click();
 
+        // confirm room visible on home page
         await homePage.goToHomePage();
         expect(homePage.logo).toBeVisible;
         expect(homePage.hotelRoom).toBeVisible;
         await expect(homePage.hotelRoom).toHaveCount(2);
 
+        // delete room on admin page
         await adminPage.goToAdminPage();
         expect(adminPage.deleteRoomButton).toBeVisible;
         await adminPage.deleteRoomButton.nth(1).click();

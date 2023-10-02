@@ -9,7 +9,7 @@ export async function createRoom(request:APIRequestContext): Promise<number>{
 }
 
 export async function deleteRoom(request:APIRequestContext, roomId: number) {
-    const deleteRoom = await roomDeleteRequest(request, roomId)
+    const deleteRoom = await roomDeleteRequest(request, roomId);
     expect(deleteRoom.ok()).toBeTruthy();
 
     const retriveRoom = await roomGetRequest(request, roomId);
@@ -20,6 +20,6 @@ export async function login(request:APIRequestContext): Promise<string> {
     const loginResponse = await authLoginPostRequest(request);
     expect((loginResponse).status()).toEqual(200);
     const headers = (loginResponse).headers();
-    const cookies = headers['set-cookie']
+    const cookies = headers['set-cookie'];
     return cookies.split('=')[1].split(';')[0];
 }

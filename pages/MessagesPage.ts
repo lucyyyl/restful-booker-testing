@@ -1,5 +1,6 @@
 import {Locator, Page} from '@playwright/test';
 import { AdminPage } from './AdminPage';
+import { messagesURL } from '../helpers/envVars';
 
 export class MessagesPage extends AdminPage {
     readonly messageRow: Locator;
@@ -12,10 +13,10 @@ export class MessagesPage extends AdminPage {
         this.messageRow = page.getByTestId('message-row');
         this.messageModal = page.getByTestId('message-modal');
         this.messageCloseButton = page.getByTestId('close-button');
-        this.messageDeleteButton = page.getByTestId('DeleteMessage1')
+        this.messageDeleteButton = page.getByTestId('DeleteMessage1');
     }
 
     async goToMessagePage() {
-        await this.page.goto('http://localhost:8080/#/admin/messages');
+        await this.page.goto(messagesURL);
     }
 }

@@ -5,7 +5,7 @@ import { createRoom, deleteRoom, login } from '../../helpers/APIHelpers';
 test.describe('Room API', () => {
     test.beforeEach(async ({ request }) => {
       await login(request);
-    })
+    });
 
     test('should create a room, retrive the room and delete the room @API', async ({ request }) => {
       const newRoom = await roomPostRequest(request);
@@ -17,7 +17,7 @@ test.describe('Room API', () => {
       expect(retriveRoom.ok()).toBeTruthy();
       expect(await retriveRoom.text()).toContain(`"roomid":${roomid}`);
 
-      const deleteRoom = await roomDeleteRequest(request, roomid)
+      const deleteRoom = await roomDeleteRequest(request, roomid);
       expect(deleteRoom.ok()).toBeTruthy();
 
       retriveRoom = await roomGetRequest(request, roomid);
@@ -44,6 +44,6 @@ test.describe('Room API', () => {
       expect(roomType).toBe('Double');
 
       await deleteRoom(request, roomid);
-    })
+    });
 
 });

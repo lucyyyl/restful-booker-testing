@@ -7,7 +7,7 @@ export async function authLoginPostRequest(request: APIRequestContext, username 
             "username": username,
             "password": password
           }
-    })
+    });
 }
 
 export async function authLogoutRequest(request: APIRequestContext, token: string) {
@@ -15,7 +15,7 @@ export async function authLogoutRequest(request: APIRequestContext, token: strin
         data: {
             "token": token
         }
-    })
+    });
 }
 
 export async function roomPostRequest(
