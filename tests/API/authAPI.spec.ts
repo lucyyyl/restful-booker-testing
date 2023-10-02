@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { authAPIURL } from '../../helpers/envVars';
-import { authLoginPostRequest } from '../../helpers/APIBuilders';
+import { authLoginPostRequest, authLogoutRequest } from '../../helpers/APIBuilders';
 
 test.describe.configure({ mode: 'parallel' });
 test.describe('Auth API', () => {
@@ -13,11 +12,7 @@ test.describe('Auth API', () => {
         const cookies = headers['set-cookie']
         const cookie = cookies.split('=')[1].split(';')[0];
 
-        const logoutResponse = await request.post(`${authAPIURL}logout`, {
-            data: {
-                "token": cookie
-            }
-        })
+        const logoutResponse = await authLogoutRequest(request, cookie);
         expect(logoutResponse.status()).toEqual(200);
     });
   

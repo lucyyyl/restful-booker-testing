@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
-import { roomsAPIURL, authAPIURL } from '../../helpers/envVars';
-import { authLoginPostRequest, roomDeleteRequest, roomGetRequest, roomPostRequest } from '../../helpers/APIBuilders';
+import { roomDeleteRequest, roomGetRequest, roomPostRequest, roomPutRequest } from '../../helpers/APIBuilders';
+import { createRoom, deleteRoom, login } from '../../helpers/APIHelpers';
 
 test.describe.configure({ mode: 'parallel' });
 test.describe('Room API', () => {
     test.beforeEach(async ({ request }) => {
-      await authLoginPostRequest(request);
+      await login(request);
     })
 
     test('should create a room, retrive the room and delete the room @API', async ({ request }) => {
@@ -32,5 +32,19 @@ test.describe('Room API', () => {
       const error = resp.error;
       expect(error).toBe('BAD_REQUEST');
     });
+
+    test('should update room informatoin @API',async ({ request }) => {
+      const roomid = await createRoom(request);
+
+      const updateRoom = await roomPutRequest(request,  roomid);
+      expect(updateRoom.ok()).toBeTruthy();
+
+      let retriveRoom = await roomGetRequest(request, roomid);
+      expect(retriveRoom.ok()).toBeTruthy();
+      let roomType = JSON.parse(await retriveRoom.text()).type;
+      expect(roomType).toBe('Double');
+
+      await deleteRoom(request, roomid);
+    })
 
 });
