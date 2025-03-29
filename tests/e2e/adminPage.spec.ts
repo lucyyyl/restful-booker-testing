@@ -4,9 +4,9 @@ import { adminPassword, adminUsername } from '../../helpers/envVars';
 
 test.describe.configure({ mode: 'parallel' });
 test.describe('Admin Page', () => {
-    let adminPageContext: BrowserContext, 
-    adminPage: AdminPage;
-    
+    let adminPageContext: BrowserContext,
+        adminPage: AdminPage;
+
     test.beforeEach(async ({ browser }) => {
 
         adminPageContext = await browser.newContext();
@@ -23,9 +23,9 @@ test.describe('Admin Page', () => {
         await adminPage.userNameField.fill(adminUsername);
         await adminPage.passwordField.fill(adminPassword);
         await adminPage.submitCredentialsButton.click();
-        expect(adminPage.logoutButton).toBeVisible;
+        await expect(adminPage.logoutButton).toBeVisible();
         await adminPage.logoutButton.click();
-        expect(adminPage.userNameField).toBeVisible;
+        await expect(adminPage.userNameField).toBeVisible();
     });
 });
 

@@ -1,8 +1,7 @@
 # RESTFUL-BOOKER-TESTING
 
 This is an example automated test framework for the [restful-booker-platform](https://github.com/mwinteringham/restful-booker-platform).  
-Note: This framework has been built using a locally modified version of the restful-booker-platform. This can be found [here](https://github.com/lucyyyl/restful-booker-platform-edited-for-testing) - instructions on how to run this can be seen in the README.md file for this repo.<br>
-I would like to reiterate that I did not build the original platform, I just edited some of the data-testids. 
+Note: You will need to download and run the restful-booker-platform locally in order to run this test suite as the endpoints in the test point to the localhost endpoints of the restful-booker-platform - instructions on how to run this can be seen in the README.md file for this repo.
 
 ## Running the tests
 Run ```npx playwright test```

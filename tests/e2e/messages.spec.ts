@@ -6,9 +6,9 @@ import { adminPassword, adminUsername } from '../../helpers/envVars'
 test.describe.configure({ mode: 'parallel' });
 test.describe('Messages', () => {
     let homePage: HomePage,
-    homePageContext: BrowserContext,
-    messagesPage: MessagesPage, 
-    messagesPageContext: BrowserContext;
+        homePageContext: BrowserContext,
+        messagesPage: MessagesPage,
+        messagesPageContext: BrowserContext;
 
     test.beforeEach(async ({ browser }) => {
         homePageContext = await browser.newContext();
@@ -21,15 +21,15 @@ test.describe('Messages', () => {
     })
 
     test('contact form shows error when blank form submitted @E2E', async () => {
-        expect(homePage.contactName).toBeVisible;
-        expect(homePage.contactEmail).toBeVisible;
-        expect(homePage.contactPhone).toBeVisible;
-        expect(homePage.contactSubject).toBeVisible;
-        expect(homePage.contactDescription).toBeVisible;
-        expect(homePage.contactSubmitButton).toBeVisible;
+        await expect(homePage.contactName).toBeVisible();
+        await expect(homePage.contactEmail).toBeVisible();
+        await expect(homePage.contactPhone).toBeVisible();
+        await expect(homePage.contactSubject).toBeVisible();
+        await expect(homePage.contactDescription).toBeVisible();
+        await expect(homePage.contactSubmitButton).toBeVisible();
 
         await homePage.contactSubmitButton.click();
-        expect(homePage.contactFormErrorAlert).toBeVisible;
+        await expect(homePage.errorAlert).toBeVisible();
     });
 
     test('contact form shows success message when form submitted, can see message in admin page @E2E', async ({ browser }) => {
@@ -42,19 +42,19 @@ test.describe('Messages', () => {
         }
 
         // log in to admin
-        expect(messagesPage.pageTitle).toBeVisible;
+        await expect(messagesPage.pageTitle).toBeVisible();
         await messagesPage.userNameField.fill(adminUsername);
         await messagesPage.passwordField.fill(adminPassword);
         await messagesPage.submitCredentialsButton.click();
-        expect(messagesPage.logoutButton).toBeVisible;
-        
+        await expect(messagesPage.logoutButton).toBeVisible();
+
         // check contact form elements are there
-        expect(homePage.contactName).toBeVisible;
-        expect(homePage.contactEmail).toBeVisible;
-        expect(homePage.contactPhone).toBeVisible;
-        expect(homePage.contactSubject).toBeVisible;
-        expect(homePage.contactDescription).toBeVisible;
-        expect(homePage.contactSubmitButton).toBeVisible;
+        await expect(homePage.contactName).toBeVisible();
+        await expect(homePage.contactEmail).toBeVisible();
+        await expect(homePage.contactPhone).toBeVisible();
+        await expect(homePage.contactSubject).toBeVisible();
+        await expect(homePage.contactDescription).toBeVisible();
+        await expect(homePage.contactSubmitButton).toBeVisible();
 
         // fill in contact form
         await homePage.contactName.fill('Jane');
@@ -64,16 +64,16 @@ test.describe('Messages', () => {
         await homePage.contactDescription.fill('This is a message about an enquiry.');
 
         await homePage.contactSubmitButton.click();
-        expect(homePage.contactFormSuccess).toBeVisible;
+        await expect(homePage.contactFormSuccess).toBeVisible();
 
         // confirm message has been submitted and delete message
         messagesPage.goToMessagePage();
-        expect(messagesPage.messageRow).toHaveCount(2);
-        await messagesPage.messageRow.nth(1).click();
-        expect(messagesPage.messageModal).toBeVisible;
+        await expect(messagesPage.messageRow).toHaveCount(2); // need this to allow more than 2 if rerunning
+        await messagesPage.messageRow.nth(1).click(); // need to select the correct message not always nth(1)
+        await expect(messagesPage.messageModal).toBeVisible();
         await messagesPage.messageCloseButton.click();
-        await messagesPage.messageDeleteButton.click();
-        expect(messagesPage.messageRow.nth(1)).not.toBeVisible;
+        await messagesPage.messageDeleteButton.nth(1).click(); // need to select the correct delete button for the exact message
+        await expect(messagesPage.messageRow.nth(1)).not.toBeVisible(); // need to select the correct message not always nth(1)
     });
 
 });

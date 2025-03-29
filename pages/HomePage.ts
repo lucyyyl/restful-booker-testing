@@ -1,4 +1,4 @@
-import {Locator, Page} from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import { mainPageURL } from '../helpers/envVars';
 
 export class HomePage {
@@ -13,42 +13,41 @@ export class HomePage {
     readonly roomLastNameField: Locator;
     readonly roomEmailField: Locator;
     readonly roomPhoneField: Locator;
-    readonly roomErrorAlert: Locator;
+    readonly errorAlert: Locator;
     readonly roomBookButton: Locator;
-    readonly roomBookConfirmation: Locator;
+    readonly roomCancelButton: Locator;
+    readonly roomBookConfirmationModal: Locator;
     readonly contactName: Locator;
     readonly contactEmail: Locator;
     readonly contactPhone: Locator;
     readonly contactSubject: Locator;
-    readonly contactDescription: Locator; 
+    readonly contactDescription: Locator;
     readonly contactSubmitButton: Locator;
-    readonly contactFormErrorAlert: Locator;
     readonly contactFormSuccess: Locator;
-
 
     constructor(page: Page) {
         this.page = page;
-        this.logo = page.getByTestId('hotel-logo');
+        this.logo = page.locator('.hotel-logoUrl');
         this.map = page.getByTestId('map');
         this.letMeHackButton = page.getByText('Let me hack!');
-        this.hotelRoom = page.getByTestId('hotel-room-row');
-        this.bookRoomButton = page.getByTestId('book-room-button');
-        this.calendar = page.getByTestId('roomBooking-calendar');
-        this.roomFirstNameField = page.getByTestId('roomBooking-firstNameField');
-        this.roomLastNameField = page.getByTestId('roomBooking-lastNameField');
-        this.roomEmailField = page.getByTestId('roomBooking-emailField');
-        this.roomPhoneField = page.getByTestId('roomBooking-phoneField');
-        this.roomErrorAlert = page.getByTestId('roomBooking-errorAlert');
-        this.roomBookButton = page.getByTestId('roomBooking-bookRoomButton');
-        this.roomBookConfirmation = page.getByTestId('booking-success-confirmation');
+        this.hotelRoom = page.locator('.hotel-room-info');
+        this.bookRoomButton = page.getByRole('button', { name: 'Book this room' });
+        this.calendar = page.locator('.rbc-calendar');
+        this.roomFirstNameField = page.getByLabel('Firstname');
+        this.roomLastNameField = page.getByLabel('Lastname');
+        this.roomEmailField = page.locator('input[name="email"]');
+        this.roomPhoneField = page.locator('input[name="phone"]');
+        this.errorAlert = page.locator('.alert-danger');
+        this.roomBookButton = page.getByRole('button', { name: 'Book' });
+        this.roomCancelButton = page.getByRole('button', { name: 'Cancel' });
+        this.roomBookConfirmationModal = page.getByRole('dialog').filter({ has: page.locator('.confirmation-modal') });
         this.contactName = page.getByTestId('ContactName');
         this.contactEmail = page.getByTestId('ContactEmail');
         this.contactPhone = page.getByTestId('ContactPhone');
         this.contactSubject = page.getByTestId('ContactSubject');
         this.contactDescription = page.getByTestId('ContactDescription');
-        this.contactSubmitButton = page.getByTestId('ContactSubmitButton');
-        this.contactFormErrorAlert = page.getByTestId('contactForm-errorAlert');
-        this.contactFormSuccess = page.getByTestId('ContactSuccess');
+        this.contactSubmitButton = page.getByRole('button', { name: 'Submit' });
+        this.contactFormSuccess = page.getByText('Thanks for getting in touch ');
     }
 
     async goToHomePage() {

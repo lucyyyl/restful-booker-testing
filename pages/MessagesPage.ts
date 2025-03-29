@@ -1,4 +1,4 @@
-import {Locator, Page} from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import { AdminPage } from './AdminPage';
 import { messagesURL } from '../helpers/envVars';
 
@@ -10,10 +10,10 @@ export class MessagesPage extends AdminPage {
 
     constructor(page: Page) {
         super(page);
-        this.messageRow = page.getByTestId('message-row');
-        this.messageModal = page.getByTestId('message-modal');
-        this.messageCloseButton = page.getByTestId('close-button');
-        this.messageDeleteButton = page.getByTestId('DeleteMessage1');
+        this.messageRow = page.locator('.row.detail');
+        this.messageModal = page.locator('.message-modal');
+        this.messageCloseButton = page.getByRole('button', { name: 'Close' });
+        this.messageDeleteButton = page.getByTestId(/.*DeleteMessage.*/);
     }
 
     async goToMessagePage() {
