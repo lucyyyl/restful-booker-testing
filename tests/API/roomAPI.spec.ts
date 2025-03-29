@@ -3,47 +3,47 @@ import { roomDeleteRequest, roomGetRequest, roomPostRequest, roomPutRequest } fr
 import { createRoom, deleteRoom, login } from '../../helpers/APIHelpers';
 
 test.describe('Room API', () => {
-    test.beforeEach(async ({ request }) => {
-      await login(request);
-    });
+  test.beforeEach(async ({ request }) => {
+    await login(request);
+  });
 
-    test('should create a room, retrive the room and delete the room @API', async ({ request }) => {
-      const newRoom = await roomPostRequest(request);
-      expect((newRoom).status()).toEqual(201);
-      const resp = JSON.parse(await newRoom.text());
-      const roomid = resp.roomid;
-  
-      let retriveRoom = await roomGetRequest(request);
-      expect(retriveRoom.ok()).toBeTruthy();
-      expect(await retriveRoom.text()).toContain(`"roomid":${roomid}`);
+  test('should create a room, retrive the room and delete the room @API', async ({ request }) => {
+    const newRoom = await roomPostRequest(request);
+    expect((newRoom).status()).toEqual(201);
+    const resp = JSON.parse(await newRoom.text());
+    const roomid = resp.roomid;
 
-      const deleteRoom = await roomDeleteRequest(request, roomid);
-      expect(deleteRoom.ok()).toBeTruthy();
+    let retriveRoom = await roomGetRequest(request);
+    expect(retriveRoom.ok()).toBeTruthy();
+    expect(await retriveRoom.text()).toContain(`"roomid":${roomid}`);
 
-      retriveRoom = await roomGetRequest(request, roomid);
-      expect(retriveRoom.status()).toBe(500);
-    });
-  
-    test('should return an error when an invalid room creation request is sent @API', async ({ request }) => {
-      const newRoom = await roomPostRequest(request, "");
-      expect(newRoom.status()).toEqual(400);
-      const resp = JSON.parse(await newRoom.text());
-      const error = resp.error;
-      expect(error).toBe('BAD_REQUEST');
-    });
+    const deleteRoom = await roomDeleteRequest(request, roomid);
+    expect(deleteRoom.ok()).toBeTruthy();
 
-    test('should update room information @API',async ({ request }) => {
-      const roomid = await createRoom(request);
+    retriveRoom = await roomGetRequest(request, roomid);
+    expect(retriveRoom.status()).toBe(500);
+  });
 
-      const updateRoom = await roomPutRequest(request,  roomid);
-      expect(updateRoom.ok()).toBeTruthy();
+  test('should return an error when an invalid room creation request is sent @API', async ({ request }) => {
+    const newRoom = await roomPostRequest(request, "");
+    expect(newRoom.status()).toEqual(400);
+    const resp = JSON.parse(await newRoom.text());
+    const error = resp.error;
+    expect(error).toBe('BAD_REQUEST');
+  });
 
-      let retriveRoom = await roomGetRequest(request, roomid);
-      expect(retriveRoom.ok()).toBeTruthy();
-      let roomType = JSON.parse(await retriveRoom.text()).type;
-      expect(roomType).toBe('Double');
+  test('should update room information @API', async ({ request }) => {
+    const roomid = await createRoom(request);
 
-      await deleteRoom(request, roomid);
-    });
+    const updateRoom = await roomPutRequest(request, roomid);
+    expect(updateRoom.ok()).toBeTruthy();
+
+    let retriveRoom = await roomGetRequest(request, roomid);
+    expect(retriveRoom.ok()).toBeTruthy();
+    let roomType = JSON.parse(await retriveRoom.text()).type;
+    expect(roomType).toBe('Double');
+
+    await deleteRoom(request, roomid);
+  });
 
 });

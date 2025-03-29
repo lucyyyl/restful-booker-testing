@@ -5,9 +5,9 @@ import { adminPassword, adminUsername } from '../../helpers/envVars';
 
 test.describe('Rooms', () => {
     let homePage: HomePage,
-    homePageContext: BrowserContext,
-    adminPage: AdminPage, 
-    adminPageContext: BrowserContext;
+        homePageContext: BrowserContext,
+        adminPage: AdminPage,
+        adminPageContext: BrowserContext;
 
     test.beforeEach(async ({ browser }) => {
         homePageContext = await browser.newContext();
@@ -29,17 +29,17 @@ test.describe('Rooms', () => {
     });
 
     test('has hotel room and booking form errors when incorrect data submitted @E2E', async () => {
-        expect(homePage.hotelRoom).toBeVisible;
-        expect(homePage.bookRoomButton).toBeVisible;
+        await expect(homePage.hotelRoom).toBeVisible(); // need to account for when more than 1 room 
+        await expect(homePage.bookRoomButton).toBeVisible();
         await homePage.bookRoomButton.click();
 
         // confirm room form elements are visible
-        expect(homePage.calendar).toBeVisible;
-        expect(homePage.roomFirstNameField).toBeVisible;
-        expect(homePage.roomLastNameField).toBeVisible;
-        expect(homePage.roomEmailField).toBeVisible;
-        expect(homePage.roomPhoneField).toBeVisible;
-        expect(homePage.roomBookButton).toBeVisible;
+        await expect(homePage.calendar).toBeVisible();
+        await expect(homePage.roomFirstNameField).toBeVisible();
+        await expect(homePage.roomLastNameField).toBeVisible();
+        await expect(homePage.roomEmailField).toBeVisible();
+        await expect(homePage.roomPhoneField).toBeVisible();
+        await expect(homePage.roomBookButton).toBeVisible();
 
         // fill in room form
         await homePage.roomFirstNameField.fill('Smith');
@@ -49,16 +49,16 @@ test.describe('Rooms', () => {
         await homePage.roomBookButton.click()
 
         // confirm error is shown
-        expect(homePage.roomErrorAlert).toBeVisible;
+        await expect(homePage.errorAlert).toBeVisible();
     });
 
     test('can add room and delete room @E2E', async () => {
         // log in to admin
-        expect(adminPage.pageTitle).toBeVisible;
+        await expect(adminPage.pageTitle).toBeVisible();
         await adminPage.userNameField.fill(adminUsername);
         await adminPage.passwordField.fill(adminPassword);
         await adminPage.submitCredentialsButton.click();
-        expect(adminPage.logoutButton).toBeVisible;
+        await expect(adminPage.logoutButton).toBeVisible();
 
         // add a room
         await adminPage.roomNameField.fill('102');
@@ -72,13 +72,12 @@ test.describe('Rooms', () => {
 
         // confirm room visible on home page
         await homePage.goToHomePage();
-        expect(homePage.logo).toBeVisible;
-        expect(homePage.hotelRoom).toBeVisible;
+        await expect(homePage.logo).toBeVisible();
         await expect(homePage.hotelRoom).toHaveCount(2);
 
         // delete room on admin page
         await adminPage.goToAdminPage();
-        expect(adminPage.deleteRoomButton).toBeVisible;
+        await expect(adminPage.deleteRoomButton).toHaveCount(2);
         await adminPage.deleteRoomButton.nth(1).click();
         await expect(adminPage.deleteRoomButton).toHaveCount(1);
     });

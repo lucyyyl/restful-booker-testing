@@ -15,7 +15,7 @@ test.describe('Auth API', () => {
         const logoutResponse = await authLogoutRequest(request, cookie);
         expect(logoutResponse.status()).toEqual(200);
     });
-  
+
     test('should not log in with invalid credentials @API', async ({ request }) => {
         const loginResponse = await authLoginPostRequest(request, 'xxxx', 'zzzz');
         expect((loginResponse).status()).toEqual(403);
