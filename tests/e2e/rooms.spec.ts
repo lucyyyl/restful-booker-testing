@@ -61,7 +61,13 @@ test.describe('Rooms', () => {
         await expect(adminPage.logoutButton).toBeVisible();
 
         // add a room
-        await adminPage.roomNameField.fill('102');
+        const originalRoomCount = await adminPage.page.getByTestId('roomlisting').count();
+        const newRoomCount = originalRoomCount + 1;
+        const roomElements = await adminPage.page.locator("[id^='roomName']").all();
+        const lastRoomNumber = await adminPage.page.locator("[id^='roomName']").nth(roomElements.length - 2).textContent();
+        const newRoomNumber = +lastRoomNumber! + 1;
+
+        await adminPage.roomNameField.fill(newRoomNumber.toString()); 
         await adminPage.roomTypeDropdown.selectOption('Double');
         await adminPage.roomAccessibilityDropdown.selectOption('true');
         await adminPage.roomPriceField.fill('150');
@@ -73,13 +79,13 @@ test.describe('Rooms', () => {
         // confirm room visible on home page
         await homePage.goToHomePage();
         await expect(homePage.logo).toBeVisible();
-        await expect(homePage.hotelRoom).toHaveCount(2);
+        await expect(homePage.hotelRoom).toHaveCount(newRoomCount);
 
         // delete room on admin page
         await adminPage.goToAdminPage();
-        await expect(adminPage.deleteRoomButton).toHaveCount(2);
-        await adminPage.deleteRoomButton.nth(1).click();
-        await expect(adminPage.deleteRoomButton).toHaveCount(1);
+        await expect(adminPage.deleteRoomButton).toHaveCount(newRoomCount);
+        await adminPage.deleteRoomButton.last().click();
+        await expect(adminPage.deleteRoomButton).toHaveCount(originalRoomCount);
     });
 
 });

@@ -47,6 +47,9 @@ test.describe('Messages', () => {
         await messagesPage.passwordField.fill(adminPassword);
         await messagesPage.submitCredentialsButton.click();
         await expect(messagesPage.logoutButton).toBeVisible();
+        await expect(messagesPage.page.locator('.messages')).toBeVisible();
+        const originalMessagesCount = await messagesPage.messageRow.count();
+        const newMessagesCount = originalMessagesCount + 1;
 
         // check contact form elements are there
         await expect(homePage.contactName).toBeVisible();
@@ -67,13 +70,13 @@ test.describe('Messages', () => {
         await expect(homePage.contactFormSuccess).toBeVisible();
 
         // confirm message has been submitted and delete message
-        messagesPage.goToMessagePage();
-        await expect(messagesPage.messageRow).toHaveCount(2); // need this to allow more than 2 if rerunning
-        await messagesPage.messageRow.nth(1).click(); // need to select the correct message not always nth(1)
+        await messagesPage.goToMessagePage();
+        await expect(messagesPage.messageRow).toHaveCount(newMessagesCount); 
+        await messagesPage.messageRow.last().click(); 
         await expect(messagesPage.messageModal).toBeVisible();
         await messagesPage.messageCloseButton.click();
-        await messagesPage.messageDeleteButton.nth(1).click(); // need to select the correct delete button for the exact message
-        await expect(messagesPage.messageRow.nth(1)).not.toBeVisible(); // need to select the correct message not always nth(1)
+        await messagesPage.messageDeleteButton.last().click(); 
+        await expect(messagesPage.messageRow).toHaveCount(originalMessagesCount); 
     });
 
 });
