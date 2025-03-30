@@ -17,7 +17,7 @@ test.describe('Admin Page', () => {
         }
     });
 
-    test('can login and logout @E2E', async ({}) => {
+    test('can login and logout @E2E', async () => {
         await expect(adminPage.pageTitle).toBeVisible();
         await adminPage.userNameField.fill(adminUsername);
         await adminPage.passwordField.fill(adminPassword);
