@@ -21,15 +21,15 @@ test.describe('Messages', () => {
     })
 
     test('contact form shows error when blank form submitted @E2E', async () => {
-        await expect(homePage.contactName).toBeVisible();
-        await expect(homePage.contactEmail).toBeVisible();
-        await expect(homePage.contactPhone).toBeVisible();
-        await expect(homePage.contactSubject).toBeVisible();
-        await expect(homePage.contactDescription).toBeVisible();
-        await expect(homePage.contactSubmitButton).toBeVisible();
+        await expect(homePage.contactName, 'Contact form name field is visible').toBeVisible();
+        await expect(homePage.contactEmail, 'Contact form email field is visible').toBeVisible();
+        await expect(homePage.contactPhone, 'Contact form phone number field is visible').toBeVisible();
+        await expect(homePage.contactSubject, 'Contact form subject field is visible').toBeVisible();
+        await expect(homePage.contactDescription, 'Contact form description field is visible').toBeVisible();
+        await expect(homePage.contactSubmitButton, 'Contact form submit button is visible').toBeVisible();
 
         await homePage.contactSubmitButton.click();
-        await expect(homePage.errorAlert).toBeVisible();
+        await expect(homePage.errorAlert, 'Contact form error is shown').toBeVisible();
     });
 
     test('contact form shows success message when form submitted, can see message in admin page @E2E', async ({ browser }) => {
@@ -42,22 +42,22 @@ test.describe('Messages', () => {
         }
 
         // log in to admin
-        await expect(messagesPage.pageTitle).toBeVisible();
+        await expect(messagesPage.pageTitle, 'The page title is "B&B Booking Management"').toBeVisible();
         await messagesPage.userNameField.fill(adminUsername);
         await messagesPage.passwordField.fill(adminPassword);
         await messagesPage.submitCredentialsButton.click();
-        await expect(messagesPage.logoutButton).toBeVisible();
-        await expect(messagesPage.page.locator('.messages')).toBeVisible();
+        await expect(messagesPage.logoutButton, 'Logout button is visible').toBeVisible();
+        await expect(messagesPage.page.locator('.messages'), 'Message container is on page').toBeVisible();
         const originalMessagesCount = await messagesPage.messageRow.count();
         const newMessagesCount = originalMessagesCount + 1;
 
         // check contact form elements are there
-        await expect(homePage.contactName).toBeVisible();
-        await expect(homePage.contactEmail).toBeVisible();
-        await expect(homePage.contactPhone).toBeVisible();
-        await expect(homePage.contactSubject).toBeVisible();
-        await expect(homePage.contactDescription).toBeVisible();
-        await expect(homePage.contactSubmitButton).toBeVisible();
+        await expect(homePage.contactName, 'Contact form name field is visible').toBeVisible();
+        await expect(homePage.contactEmail, 'Contact form email field is visible').toBeVisible();
+        await expect(homePage.contactPhone, 'Contact form phone number field is visible').toBeVisible();
+        await expect(homePage.contactSubject, 'Contact form subject field is visible').toBeVisible();
+        await expect(homePage.contactDescription, 'Contact form description field is visible').toBeVisible();
+        await expect(homePage.contactSubmitButton, 'Contact form submit button is visible').toBeVisible();
 
         // fill in contact form
         await homePage.contactName.fill('Jane');
@@ -67,16 +67,16 @@ test.describe('Messages', () => {
         await homePage.contactDescription.fill('This is a message about an enquiry.');
 
         await homePage.contactSubmitButton.click();
-        await expect(homePage.contactFormSuccess).toBeVisible();
+        await expect(homePage.contactFormSuccess, 'Message submitted success message shown').toBeVisible();
 
         // confirm message has been submitted and delete message
-        await messagesPage.goToMessagePage();
-        await expect(messagesPage.messageRow).toHaveCount(newMessagesCount); 
+        await messagesPage.page.reload();
+        await expect(messagesPage.messageRow, `There are ${newMessagesCount} messages on the page`).toHaveCount(newMessagesCount); 
         await messagesPage.messageRow.last().click(); 
-        await expect(messagesPage.messageModal).toBeVisible();
+        await expect(messagesPage.messageModal, 'The message modal has opened').toBeVisible();
         await messagesPage.messageCloseButton.click();
         await messagesPage.messageDeleteButton.last().click(); 
-        await expect(messagesPage.messageRow).toHaveCount(originalMessagesCount); 
+        await expect(messagesPage.messageRow, `There are ${originalMessagesCount} messages on the page`).toHaveCount(originalMessagesCount); 
     });
 
 });

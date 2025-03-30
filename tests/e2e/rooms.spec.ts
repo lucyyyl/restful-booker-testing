@@ -29,17 +29,18 @@ test.describe('Rooms', () => {
     });
 
     test('has hotel room and booking form errors when incorrect data submitted @E2E', async () => {
-        await expect(homePage.hotelRoom).toBeVisible(); // need to account for when more than 1 room 
-        await expect(homePage.bookRoomButton).toBeVisible();
-        await homePage.bookRoomButton.click();
+        await expect(homePage.hotelRoom, 'There is at least 1 room available to book').not.toHaveCount(0);
+        const roomCount = await homePage.hotelRoom.count();
+        await expect(homePage.bookRoomButton, `There should be ${roomCount} book room buttons`).toHaveCount(roomCount);
+        await homePage.bookRoomButton.first().click();
 
         // confirm room form elements are visible
-        await expect(homePage.calendar).toBeVisible();
-        await expect(homePage.roomFirstNameField).toBeVisible();
-        await expect(homePage.roomLastNameField).toBeVisible();
-        await expect(homePage.roomEmailField).toBeVisible();
-        await expect(homePage.roomPhoneField).toBeVisible();
-        await expect(homePage.roomBookButton).toBeVisible();
+        await expect(homePage.calendar, 'Room booking calendar is visible').toBeVisible();
+        await expect(homePage.roomFirstNameField, 'Room booking form first name field is visible').toBeVisible();
+        await expect(homePage.roomLastNameField, 'Room booking form last name field is visible').toBeVisible();
+        await expect(homePage.roomEmailField, 'Room booking form email field is visible').toBeVisible();
+        await expect(homePage.roomPhoneField, 'Room booking form phone number field is visible').toBeVisible();
+        await expect(homePage.roomBookButton, 'Room booking form book room button is visible').toBeVisible();
 
         // fill in room form
         await homePage.roomFirstNameField.fill('Smith');
@@ -49,7 +50,7 @@ test.describe('Rooms', () => {
         await homePage.roomBookButton.click()
 
         // confirm error is shown
-        await expect(homePage.errorAlert).toBeVisible();
+        await expect(homePage.errorAlert, 'Room booking form error is shown').toBeVisible();
     });
 
     test('can add room and delete room @E2E', async () => {
