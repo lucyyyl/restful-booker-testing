@@ -1,8 +1,7 @@
-import { test, expect, BrowserContext, Page } from '@playwright/test';
+import { test, expect, BrowserContext } from '@playwright/test';
 import { AdminPage } from '../../pages/AdminPage';
 import { adminPassword, adminUsername } from '../../helpers/envVars';
 
-test.describe.configure({ mode: 'parallel' });
 test.describe('Admin Page', () => {
     let adminPageContext: BrowserContext,
         adminPage: AdminPage;
@@ -19,13 +18,13 @@ test.describe('Admin Page', () => {
     });
 
     test('can login and logout @E2E', async () => {
-        expect(adminPage.pageTitle).toBeVisible;
+        await expect(adminPage.pageTitle).toBeVisible();
         await adminPage.userNameField.fill(adminUsername);
         await adminPage.passwordField.fill(adminPassword);
         await adminPage.submitCredentialsButton.click();
-        await expect(adminPage.logoutButton).toBeVisible();
+        await expect(adminPage.logoutButton, 'Logout button is visible').toBeVisible();
         await adminPage.logoutButton.click();
-        await expect(adminPage.userNameField).toBeVisible();
+        await expect(adminPage.userNameField, 'login username field is visible').toBeVisible();
     });
 });
 
